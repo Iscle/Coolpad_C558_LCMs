@@ -37,8 +37,6 @@ struct LCM_setting_table {
 	unsigned char para_list[32];
 };
 
-#define MIN_ID_VOLTAGE 1400
-
 static struct LCM_setting_table lcm_initialization_setting[] = {
 	{0xF7, 4, {0xA9, 0x51, 0x2C, 0x82}},
 	{0xC0, 2, {0x11, 0x09}},

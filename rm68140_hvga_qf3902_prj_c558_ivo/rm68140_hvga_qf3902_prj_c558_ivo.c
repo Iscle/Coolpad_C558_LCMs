@@ -12,7 +12,6 @@
  */
 
 #include "lcm_drv.h"
-#include "mtk_auxadc.h"
 #include <linux/string.h>
 
 #define REGFLAG_DELAY 0xFE
@@ -167,15 +166,15 @@ static void lcm_resume(void)
 static unsigned int lcm_compare_id(void)
 {
 	unsigned int data[1];
-	unsigned short buf;
+	unsigned char buf[2];
 
 	data[0] = 0x23700;
-	dsi_set_cmdq(data, 1, 1);
-	dsi_dcs_read_lcm_reg_v2(0x04, &buf, sizeof(buf));
-	/*
-	unsigned int uVar2 = count_leading_zeroes(buf - 0x5480);
-	return uVar2 >> 5
-	*/
+	dsi_set_cmdq(data, sizeof(data) / sizeof(unsigned int), 1);
+	dsi_dcs_read_lcm_reg_v2(0x04, buf, sizeof(buf) / sizeof(unsigned char));
+
+	if (buf[0] == 0x54 && buf[1] == 0x80) {
+		return 1;
+	}
 
 	return 0;
 }

@@ -18,4 +18,3 @@
 obj-y += rm68140_hvga_qf3902_prj_c558_ivo.o
 
 ccflags-$(CONFIG_MTK_LCM) += -I$(srctree)/drivers/misc/mediatek/lcm/inc
-ccflags-$(CONFIG_MTK_LCM) += -I$(srctree)/drivers/misc/mediatek/auxadc

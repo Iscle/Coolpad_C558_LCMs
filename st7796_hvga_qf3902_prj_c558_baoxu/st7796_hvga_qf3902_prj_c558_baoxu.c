@@ -12,6 +12,7 @@
  */
 
 #include "lcm_drv.h"
+#include "mtk_auxadc.h"
 #include <linux/string.h>
 
 #define REGFLAG_DELAY 0xFE
@@ -36,6 +37,8 @@ struct LCM_setting_table {
 	unsigned char count;
 	unsigned char para_list[32];
 };
+
+#define MIN_ID_VOLTAGE 1400
 
 static struct LCM_setting_table lcm_initialization_setting[] = {
 	{REGFLAG_DELAY, 120, {}},
@@ -165,7 +168,24 @@ static void lcm_resume(void)
 
 static unsigned int lcm_compare_id(void)
 {
-	return 1;
+	int res;
+	int data[4] = {0, 0, 0, 0};
+	int rawdata = 0;
+	int lcm_voltage;
+
+	res = IMM_GetOneChannelValue(0x0C, data, &rawdata);
+	if (res < 0) {
+		// Failed to get the lcm_voltage reading
+		return 0;
+	}
+
+	lcm_voltage = data[0] * 1000 + data[1] * 10;
+
+	if (lcm_voltage > MIN_ID_VOLTAGE) {
+		return 1;
+	}
+
+	return 0;
 }
 
 LCM_DRIVER st7796_hvga_qf3902_prj_c558_baoxu_drv =

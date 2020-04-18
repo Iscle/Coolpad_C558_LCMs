@@ -18,3 +18,4 @@
 obj-y += st7796_hvga_qf3902_prj_c558_baoxu.o
 
 ccflags-$(CONFIG_MTK_LCM) += -I$(srctree)/drivers/misc/mediatek/lcm/inc
+ccflags-$(CONFIG_MTK_LCM) += -I$(srctree)/drivers/misc/mediatek/auxadc

@@ -173,6 +173,11 @@ static unsigned int lcm_compare_id(void)
 	int rawdata = 0;
 	int lcm_voltage;
 
+	SET_RESET_PIN(0);
+	MDELAY(120);
+	SET_RESET_PIN(1);
+	MDELAY(120);
+
 	res = IMM_GetOneChannelValue(0x0C, data, &rawdata);
 	if (res < 0) {
 		// Failed to get the lcm_voltage reading

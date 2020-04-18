@@ -166,6 +166,11 @@ static unsigned int lcm_compare_id(void)
 	unsigned int data[1];
 	unsigned char buf[2];
 
+	SET_RESET_PIN(0);
+	MDELAY(120);
+	SET_RESET_PIN(1);
+	MDELAY(120);
+
 	data[0] = 0x23700;
 	dsi_set_cmdq(data, sizeof(data) / sizeof(unsigned int), 1);
 	dsi_dcs_read_lcm_reg_v2(0x04, buf, sizeof(buf) / sizeof(unsigned char));
